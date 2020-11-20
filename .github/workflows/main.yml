@@ -24,3 +24,9 @@ jobs:
 
       - name: build vsix file
         run: vsce package
+
+      - name: create artifact
+        uses: actions/upload-artifact@v2
+        with: 
+          name: cobigen-plugin.vsix
+          path: *vsix
