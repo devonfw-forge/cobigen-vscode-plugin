@@ -20,7 +20,7 @@ jobs:
         run: npm install
       
       - name: install vs code extensions package
-        run: npm install vsce
+        run: npm install -g vsce
 
       - name: build vsix file
         run: vsce package
