@@ -10,15 +10,13 @@ on:
 
 jobs:
   build:
-    
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./cobigen-plugin
     steps:
       - uses: actions/checkout@v2
-
-        - name: install dependencies
+      - name: install dependencies
         run: npm install
       
       - name: install vs code extensions package
