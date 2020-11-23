@@ -1,0 +1,3 @@
+cobigen-plugin/node_modules/
+cobigen-plugin/out/
+*.vsix
