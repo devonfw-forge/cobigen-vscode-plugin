@@ -30,10 +30,7 @@ jobs:
         uses: notiz-dev/github-action-json-property@release
         with: 
             path: cobigen-plugin/package.json
-            prop_path: 'version'
-      
-      - name: print version
-        run: echo ${{steps.version.outputs.prop}} 
+            prop_path: 'version' 
       
       - name: create artifact
         uses: actions/upload-artifact@v2
@@ -47,9 +44,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: New release
+          tag_name: ${{steps.version.outputs.prop}}
+          release_name: Release ${{steps.version.outputs.prop}}
+          body: Release ${{steps.version.outputs.prop}} of the cobigen plugin for vs code
           draft: false
           prerelease: false
       
@@ -57,7 +54,7 @@ jobs:
         id: download_artifact
         uses: actions/download-artifact@v2
         with:
-          name: cobigen-plugin.vsix
+          name: cobigen-plugin-${{steps.version.outputs.prop}}.vsix
           path: ~/download/artifacts
        
       - name: upload release asset
@@ -68,5 +65,5 @@ jobs:
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{steps.download_artifact.outputs.download-path}}/cobigen-plugin-0.0.1.vsix
-          asset_name: cobigen-plugin.vsix
+          asset_name: cobigen-plugin-${{steps.version.outputs.prop}}.vsix
           asset_content_type: application/vsix
