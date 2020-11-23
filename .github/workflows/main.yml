@@ -52,9 +52,6 @@ jobs:
         
       - name: Echo download path
         run: echo ${{steps.download.outputs.download-path}}
-      
-      - name: Test
-        run: ls ${{steps.download.outputs.download-path}}
        
       - name: Upload Release Asset
         id: upload-release-asset 
@@ -63,6 +60,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{steps.download.outputs.download-path}}/cobigen-plugin.vsix
+          asset_path: ${{steps.download.outputs.download-path}}/*.vsix
           asset_name: cobigen-plugin.vsix
           asset_content_type: application/vsix
