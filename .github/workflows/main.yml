@@ -40,20 +40,8 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: New release
-          draft: false
+          draft: true
           prerelease: false
-         
-      - name: Output Release URL File
-        run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
-        
-      - name: Test
-        run: cat ${{ steps.create_release.outputs.upload_url }}
-        
-      - name: Save Release URL File for publish
-        uses: actions/upload-artifact@v1
-        with:
-          name: release_url
-          path: release_url.txt 
        
       - name: Upload Release Asset
         id: upload-release-asset 
@@ -62,6 +50,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/cobigen-vscode-plugin/cobigen-vscode-plugin/cobigen-plugin/cobigen-plugin.vsix
+          asset_path: /home/runner/work/cobigen-vscode-plugin/cobigen-vscode-plugin/cobigen-plugin/
           asset_name: cobigen-plugin.vsix
           asset_content_type: application/vsix
