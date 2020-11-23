@@ -35,7 +35,7 @@ jobs:
       - name: create artifact
         uses: actions/upload-artifact@v2
         with: 
-          name: cobigen-plugin.vsix
+          name: cobigen-plugin-${{steps.version.outputs.prop}}.vsix
           path: /home/runner/work/cobigen-vscode-plugin/cobigen-vscode-plugin/cobigen-plugin/*.vsix
       
       - name: create release
