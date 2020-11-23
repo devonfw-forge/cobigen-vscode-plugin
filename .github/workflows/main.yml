@@ -25,30 +25,45 @@ jobs:
       - name: build vsix file
         run: vsce package
 
+      - name: get version
+        id: version
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+            path: cobigen-plugin/package.json
+            prop_path: 'version' 
+      
       - name: create artifact
         uses: actions/upload-artifact@v2
         with: 
-          name: cobigen-plugin.vsix
+          name: cobigen-plugin-${{steps.version.outputs.prop}}.vsix
           path: /home/runner/work/cobigen-vscode-plugin/cobigen-vscode-plugin/cobigen-plugin/*.vsix
       
-      - name: Create Release
+      - name: create release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: New release
+          tag_name: ${{steps.version.outputs.prop}}
+          release_name: Release ${{steps.version.outputs.prop}}
+          body: Release ${{steps.version.outputs.prop}} of the cobigen plugin for vs code
           draft: false
           prerelease: false
       
-      - name: Upload Release Asset
+      - name: download artifact
+        id: download_artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: cobigen-plugin-${{steps.version.outputs.prop}}.vsix
+          path: ~/download/artifacts
+       
+      - name: upload release asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/cobigen-vscode-plugin/cobigen-vscode-plugin/cobigen-plugin/cobigen-plugin.vsix
-          asset_name: cobigen-plugin.vsix
+          asset_path: ${{steps.download_artifact.outputs.download-path}}/cobigen-plugin-0.0.1.vsix
+          asset_name: cobigen-plugin-${{steps.version.outputs.prop}}.vsix
+          asset_content_type: application/vsix
