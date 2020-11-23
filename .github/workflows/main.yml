@@ -50,8 +50,11 @@ jobs:
           name: cobigen-plugin.vsix
           path: ~/download/path
         
-      - name: 'Echo download path'
+      - name: Echo download path
         run: echo ${{steps.download.outputs.download-path}}
+      
+      - name: Test
+        run: ls ${{steps.download.outputs.download-path}}
        
       - name: Upload Release Asset
         id: upload-release-asset 
