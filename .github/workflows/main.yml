@@ -25,6 +25,16 @@ jobs:
       - name: build vsix file
         run: vsce package
 
+      - name: get version
+        id: version
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+            path: 'package.json'
+            prop_path: 'version'
+      
+      - name: print version
+        run: echo ${{steps.version.outputs.prop}} 
+      
       - name: create artifact
         uses: actions/upload-artifact@v2
         with: 
