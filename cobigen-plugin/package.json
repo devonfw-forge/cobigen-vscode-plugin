@@ -2,7 +2,7 @@
 	"name": "cobigen-plugin",
 	"displayName": "CobiGen Plugin",
 	"description": "CobiGen Plugin for VS Code",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.4.3"
 	},
