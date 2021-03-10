@@ -3,19 +3,19 @@ name: Build Plugin
 on:
   push:
     branches: [ main ]
-  pull_request_target:
-    branches: [ main ]
 
   workflow_dispatch:
 
 jobs:
-  build:
+  create_release:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./cobigen-plugin
+
     steps:
       - uses: actions/checkout@v2
+      
       - name: install dependencies
         run: npm install
       
