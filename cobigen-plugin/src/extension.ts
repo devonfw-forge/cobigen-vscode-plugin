@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
         setTimeout(() => {
             terminal.sendText(cmd);
-        }, 1000);
+        }, 1500);
 	});
 
 	context.subscriptions.push(disposable);
